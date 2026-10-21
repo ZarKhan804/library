@@ -16,6 +16,7 @@ import VerifyOTP from "./pages/VerifyOTP";
 import ResetPassword from "./pages/ResetPassword";
 import Contact from "./pages/Contact";
 import About from "./About/About";
+import DashboardPage from "./pages/DashboardPage";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -77,6 +78,7 @@ export default function App() {
           path="/reset-password"
           element={<ResetPassword />}
         />
+         <Route path="/dashboard" element={<DashboardPage/>}/>
       </Routes>
     </BrowserRouter>
   );
