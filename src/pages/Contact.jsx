@@ -6,10 +6,10 @@ import Footer from "../components/Footer";
 export default function Contact() {
   return (
     <main className="min-h-screen bg-[#FDF8E9]">
-      <Header />
+     
       <ContactHero />
       <ContactForm />
-      <Footer />
+   
     </main>
   );
 }
