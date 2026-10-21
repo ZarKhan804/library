@@ -93,24 +93,26 @@ export default function Features() {
   };
 
   return (
-    <section className="bg-[#FFFDF8] px-4 py-14 sm:px-6 lg:px-8">
-      <div className="mx-auto max-w-7xl">
-        <div className="mx-auto mb-10 max-w-2xl text-center">
-          <span className="inline-block rounded-full border border-amber-200 bg-amber-100 px-4 py-2 text-xs font-extrabold uppercase tracking-[0.18em] text-amber-800">
+    <section className="w-full bg-[#FFFDF8] px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
+      <div className="mx-auto w-full max-w-6xl">
+        {/* Section Heading */}
+        <div className="mx-auto mb-8 max-w-2xl text-center sm:mb-9">
+          <span className="inline-block rounded-full border border-amber-200 bg-amber-100 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-[0.16em] text-amber-800 sm:px-4 sm:py-2 sm:text-xs">
             Library Workspace
           </span>
 
-          <h2 className="mt-4 text-3xl font-black tracking-tight text-[#102A5E] sm:text-4xl">
+          <h2 className="mt-3 text-2xl font-black tracking-tight text-[#102A5E] sm:mt-4 sm:text-3xl md:text-4xl">
             Explore Library Features
           </h2>
 
-          <p className="mt-4 text-sm leading-7 text-slate-600 sm:text-base">
+          <p className="mx-auto mt-3 max-w-xl text-xs leading-6 text-slate-600 sm:text-sm sm:leading-7">
             Access your library dashboard and manage books, categories,
             members, transactions, reports, and profile settings from one place.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Feature Cards */}
+        <div className="grid grid-cols-1 justify-items-center gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-5">
           {features.map((feature) => {
             const Icon = feature.icon;
 
@@ -119,28 +121,32 @@ export default function Features() {
                 key={feature.section}
                 type="button"
                 onClick={() => handleFeatureClick(feature.section)}
-                className="group flex h-full min-h-[250px] flex-col rounded-2xl border border-[#F0E3C5] bg-white p-6 text-left shadow-sm transition duration-300 hover:-translate-y-2 hover:border-amber-300 hover:shadow-xl focus:outline-none focus:ring-4 focus:ring-amber-200"
+                className="group flex min-h-[215px] w-full max-w-[320px] flex-col items-center rounded-xl border border-[#F0E3C5] bg-white p-4 text-center shadow-sm transition duration-300 hover:-translate-y-1 hover:border-amber-300 hover:shadow-lg focus:outline-none focus:ring-4 focus:ring-amber-200 sm:min-h-[225px] sm:p-5 lg:min-h-[220px] lg:p-4 xl:p-5"
               >
+                {/* Centered Icon */}
                 <div
-                  className={`flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br ${feature.color} text-2xl text-white shadow-lg transition duration-300 group-hover:scale-110`}
+                  className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${feature.color} text-xl text-white shadow-md transition duration-300 group-hover:scale-105 sm:h-12 sm:w-12`}
                 >
                   <Icon />
                 </div>
 
-                <h3 className="mt-5 text-lg font-extrabold text-[#102A5E]">
+                {/* Centered Title */}
+                <h3 className="mt-4 w-full text-center text-base font-extrabold text-[#102A5E] sm:text-lg">
                   {feature.title}
                 </h3>
 
-                <p className="mt-3 flex-1 text-sm leading-6 text-slate-500">
+                {/* Centered Description */}
+                <p className="mt-2 w-full flex-1 text-center text-xs leading-5 text-slate-500 sm:text-sm sm:leading-6">
                   {feature.description}
                 </p>
 
-                <div className="mt-5 flex items-center gap-2 text-sm font-bold text-blue-700">
+                {/* Centered Action */}
+                <div className="mt-4 flex items-center justify-center gap-2 text-center text-xs font-bold text-blue-700 sm:text-sm">
                   {feature.section === "Logout"
                     ? "Back to Dashboard"
                     : "Open section"}
 
-                  <FaArrowRight className="transition-transform duration-300 group-hover:translate-x-1" />
+                  <FaArrowRight className="shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
                 </div>
               </button>
             );
