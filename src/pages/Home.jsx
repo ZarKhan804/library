@@ -4,15 +4,14 @@ import Features from "../components/Features";
 
 export default function Home() {
   return (
-    <main className="home-page min-h-screen w-full overflow-hidden bg-[#FDF8E4] text-black">
+    <main className="min-h-screen w-full bg-[#FBF5E6] text-[#102F50]">
       <Header />
-      <Hero />
-      <Features />
 
-      <div className="page-label">
-        <span className="label-line" />
-        <span>1. Home Page</span>
-      </div>
+      {/* Hero Section */}
+      <Hero />
+
+      {/* Features Section - Hero ke neeche */}
+      <Features />
     </main>
   );
 }

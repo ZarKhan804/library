@@ -1,48 +1,104 @@
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { BookOpen } from "lucide-react";
+
+const navItems = [
+  { label: "Home", to: "/" },
+  { label: "About", to: "/#about" },
+  { label: "Feature", to: "/#features" },
+  { label: "Contact", to: "/contact" },
+];
 
 export default function Header() {
-  return (
-    <header className="h-[72px] w-full border-b border-[#98794F]/20 bg-[#FDF8E4]">
-      <div className="mx-auto flex h-full w-[86%] max-w-[1200px] items-center justify-between max-md:w-[94%]">
+  const navigate = useNavigate();
 
-        {/* Left Logo and Brand */}
-        <Link
-          to="/"
-          className="ml-7 flex items-center gap-[10px] max-md:ml-0"
-        >
-          <img
-            src="/logo.png"
-            alt="Library Management System Logo"
-            className="h-11 w-15 shrink-0 rounded-[11px] bg-[#98794F] object-contain shadow-[0_4px_12px_rgba(152,121,79,0.14)] transition duration-300 hover:-translate-y-0.5"
+  const handleNavClick = (event, item) => {
+    if (item.to.includes("#")) {
+      event.preventDefault();
+
+      const [path, hash] = item.to.split("#");
+      const targetId = hash;
+
+      // Same page par ho to directly scroll karein
+      if (window.location.pathname === path || (path === "/" && window.location.pathname === "/")) {
+        const target = document.getElementById(targetId);
+
+        if (target) {
+          target.scrollIntoView({
+            behavior: "smooth",
+            block: "start",
+          });
+        } else {
+          window.location.hash = targetId;
+        }
+      } else {
+        // Doosre page se Home ke section par jaayein
+        navigate(path || "/");
+
+        setTimeout(() => {
+          const target = document.getElementById(targetId);
+
+          if (target) {
+            target.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+            });
+          } else {
+            window.location.hash = targetId;
+          }
+        }, 300);
+      }
+    }
+  };
+
+  return (
+    <header className="sticky top-0 z-30 h-[66px] w-full shrink-0 border-b border-[#E8D9C0] bg-white">
+      <div className="mx-auto flex h-full w-[94%] max-w-[1360px] items-center justify-between gap-3">
+
+        {/* Logo and Brand */}
+        <Link to="/" className="flex min-w-0 shrink-0 items-center gap-2">
+          <BookOpen
+            className="h-8 w-9 shrink-0 text-[#A87838] sm:h-9 sm:w-10"
+            strokeWidth={1.8}
           />
 
-          <div className="flex h-auto flex-col justify-start max-md:h-11 max-md:justify-between">
-            <strong className="block text-base font-bold leading-normal text-[#98794F] max-md:text-[11px] max-md:leading-4 max-[380px]:text-[10px]">
-              <span className="inline">Library Management </span>
-              <span className="inline max-md:block">System</span>
-            </strong>
-
-            <small className="block text-[11px] leading-normal text-[#6f5a3d] max-md:leading-none max-md:text-[8px] max-[380px]:text-[7px]">
-              Knowledge Begins Here
-            </small>
-          </div>
+          <span className="text-[11px] font-extrabold leading-tight text-[#402914] sm:text-base md:text-lg">
+            Library Management System
+          </span>
         </Link>
 
-        {/* Right Login Section */}
-        <div className="mr-7 flex items-center gap-4 max-md:mr-0 max-md:gap-2">
-          <span className="text-right text-sm font-medium text-[#6f5a3d] max-md:hidden">
-            Login to Get Started
-          </span>
+        {/* Center Navigation */}
+        <nav className="hidden h-full items-center gap-3 md:flex lg:gap-5">
+          {navItems.map((item) => (
+            <Link
+              key={item.label}
+              to={item.to}
+              onClick={(event) => handleNavClick(event, item)}
+              className={`flex h-[42px] items-center rounded-lg border px-3 text-[15px] font-semibold transition-all duration-200 lg:px-4 lg:text-base ${
+                item.label === "Home"
+                  ? "border-[#DCC6A5] bg-[#FBF5E6] text-[#98794F]"
+                  : "border-transparent text-[#4F463D] hover:border-[#DCC6A5] hover:bg-[#FBF5E6] hover:text-[#98794F]"
+              }`}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
 
+        {/* Login and Register */}
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
           <Link
             to="/login"
-            className="flex shrink-0 items-center gap-[7px] rounded-lg bg-[#98794F] px-5 py-[10px] text-sm font-semibold text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[#755C38] max-md:px-[15px] max-md:py-[9px] max-md:text-[13px] max-[380px]:px-3 max-[380px]:py-2"
+            className="rounded-md border border-[#E5D2B7] px-3 py-2 text-xs font-semibold text-[#805C32] transition hover:bg-[#F8F0E3] sm:px-5 sm:text-sm"
           >
             Login
-            <span className="transition-transform duration-300 group-hover:translate-x-0.5">
-              ↗
-            </span>
+          </Link>
+
+          <Link
+            to="/register"
+            className="rounded-md border border-[#98794F] bg-[#98794F] px-3 py-2 text-xs font-semibold text-white shadow-sm transition hover:bg-[#755B38] sm:px-5 sm:text-sm"
+          >
+            Register
           </Link>
         </div>
 
