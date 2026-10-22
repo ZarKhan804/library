@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   FaChartPie,
@@ -83,6 +83,48 @@ const features = [
 export default function Features() {
   const navigate = useNavigate();
 
+  // Footer ke hash link se sahi feature card tak scroll karein.
+  useEffect(() => {
+    let animationFrame;
+    let attempts = 0;
+    let cancelled = false;
+
+    const scrollToFeature = () => {
+      if (cancelled) return;
+
+      const hash = window.location.hash;
+
+      if (!hash) return;
+
+      const targetId = decodeURIComponent(hash.slice(1));
+
+      const target = document.getElementById(targetId);
+
+      if (target) {
+        target.scrollIntoView({
+          behavior: "auto",
+          block: "center",
+        });
+
+        return;
+      }
+
+      // React ke render hone tak next frame mein check karein.
+      attempts += 1;
+
+      if (attempts < 120) {
+        animationFrame = requestAnimationFrame(scrollToFeature);
+      }
+    };
+
+    animationFrame = requestAnimationFrame(scrollToFeature);
+
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(animationFrame);
+    };
+  }, []);
+
   const handleFeatureClick = (section) => {
     if (section === "Dashboard" || section === "Logout") {
       navigate("/dashboard");
@@ -93,7 +135,10 @@ export default function Features() {
   };
 
   return (
-    <section className="w-full bg-[#FFFDF8] px-4 py-10 sm:px-6 sm:py-12 lg:px-8">
+    <section
+      id="features"
+      className="w-full scroll-mt-20 bg-[#FFFDF8] px-4 py-10 sm:px-6 sm:py-12 lg:px-8"
+    >
       <div className="mx-auto w-full max-w-6xl">
         {/* Section Heading */}
         <div className="mx-auto mb-8 max-w-2xl text-center sm:mb-9">
@@ -118,6 +163,7 @@ export default function Features() {
 
             return (
               <button
+                id={`feature-${feature.section.toLowerCase()}`}
                 key={feature.section}
                 type="button"
                 onClick={() => handleFeatureClick(feature.section)}

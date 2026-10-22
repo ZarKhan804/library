@@ -16,9 +16,9 @@ const quickLinks = [
 ];
 
 const usefulLinks = [
-  { label: "Books", to: "/books" },
-  { label: "Members", to: "/members" },
-  { label: "Reports", to: "/reports" },
+  { label: "Books", to: "/#feature-books" },
+  { label: "Members", to: "/#feature-members" },
+  { label: "Reports", to: "/#feature-reports" },
   { label: "Login", to: "/login" },
 ];
 
@@ -46,6 +46,39 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const renderLink = (item) => {
+    const isFeatureLink = item.to.startsWith("/#");
+
+    if (isFeatureLink) {
+      return (
+        <a
+          key={item.label}
+          href={item.to}
+          className="inline-block text-base text-[#E7EAF1] transition duration-200 hover:translate-x-1 hover:text-[#E0BC7D] sm:text-xl"
+        >
+          {item.label}
+        </a>
+      );
+    }
+
+    return (
+      <Link
+        key={item.label}
+        to={item.to}
+        onClick={() => {
+          window.scrollTo({
+            top: 0,
+            left: 0,
+            behavior: "instant",
+          });
+        }}
+        className="inline-block text-base text-[#E7EAF1] transition duration-200 hover:translate-x-1 hover:text-[#E0BC7D] sm:text-xl"
+      >
+        {item.label}
+      </Link>
+    );
+  };
+
   return (
     <footer className="w-full bg-[#FDF8E9] px-3 py-3 sm:px-5 sm:py-5">
       <div className="mx-auto max-w-[1400px] rounded-[28px] border-2 border-[#C6A875] bg-[#061B3B] px-6 py-8 text-[#FFF9ED] shadow-lg sm:px-10 sm:py-10 lg:px-16">
@@ -80,12 +113,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {quickLinks.map((item) => (
                 <li key={item.label}>
-                  <Link
-                    to={item.to}
-                    className="inline-block text-base text-[#E7EAF1] transition duration-200 hover:translate-x-1 hover:text-[#E0BC7D] sm:text-xl"
-                  >
-                    {item.label}
-                  </Link>
+                  {renderLink(item)}
                 </li>
               ))}
             </ul>
@@ -100,12 +128,7 @@ export default function Footer() {
             <ul className="space-y-2">
               {usefulLinks.map((item) => (
                 <li key={item.label}>
-                  <Link
-                    to={item.to}
-                    className="inline-block text-base text-[#E7EAF1] transition duration-200 hover:translate-x-1 hover:text-[#E0BC7D] sm:text-xl"
-                  >
-                    {item.label}
-                  </Link>
+                  {renderLink(item)}
                 </li>
               ))}
             </ul>
@@ -145,12 +168,10 @@ export default function Footer() {
         {/* Copyright and Social Icons */}
         <div className="mt-8 border-t border-[#65758D] pt-6 sm:mt-10">
           <div className="flex flex-col items-center justify-between gap-5 sm:flex-row">
-
             <p className="text-center text-sm text-[#D8DFEB] sm:text-left sm:text-base">
               © 2026 Library Management System. All rights reserved.
             </p>
 
-            {/* Original-style Social Media Icons */}
             <div className="flex items-center gap-3">
               {socialLinks.map(({ label, href, Icon }) => (
                 <a
@@ -166,7 +187,6 @@ export default function Footer() {
                 </a>
               ))}
             </div>
-
           </div>
         </div>
       </div>
